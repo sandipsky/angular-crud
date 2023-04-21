@@ -1,0 +1,66 @@
+<form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" [formGroup]="studentForm"  >
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+        Username
+      </label>
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Username" formControlName="name">
+    </div>
+    <div class="mb-6">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
+        Email
+      </label>
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="email" placeholder="example@example.com" formControlName="email" >
+    </div>
+    <div class="mb-6">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
+        Gender
+      </label>
+      <input class="" id="username" type="radio" formControlName="gender" name="gender" value="Male" > Male
+      <input class="" id="username" type="radio" formControlName="gender" name="gender" value="Female" > Female
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+        IsActive?
+      </label>
+      <input id="username" type="checkbox" placeholder="Username" formControlName="isActive" name="isActive">
+    </div>
+    <div class="flex items-center justify-between">
+      <button *ngIf="selected==null" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" (click)="addStudent()" >
+        Submit
+      </button>
+      <button *ngIf="selected!=null" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" (click)="updateStudent()" >
+        Update
+      </button>
+    </div>
+  </form>
+
+  <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" (click)="deleteSelected()">Delete Selected</button>
+
+  <table class="table-auto w-full mt-20">
+    <thead>
+        <tr>
+          <th><input type="checkbox"  (change)="selectAll($event)"></th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Gender</th>
+        <th>Active</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let student of students;let i=index;" class="border-b-2">
+
+        <td><input type="checkbox" [(ngModel)]="student.selected" (change)="onItemChange(student)"></td>
+        <td class="p-5 text-center">{{student.name}}</td>
+        <td class="p-5 text-center">{{student.email}}</td>
+        <td class="p-5 text-center">{{student.gender}}</td>
+        <td *ngIf="student.isActive" class="p-5 text-center">Yes</td>
+        <td *ngIf="!student.isActive" class="p-5 text-center">No</td>
+        <td class="p-5 text-center">
+            <button class="bg-yellow-200 p-2 text-sm rounded" (click)="editStudent(student,i)">Edit</button>
+            <button class="bg-red-300 p-2 text-sm rounded ml-5"(click)="deleteStudent(i)" >Delete</button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
