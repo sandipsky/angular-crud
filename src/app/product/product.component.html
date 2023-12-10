@@ -1,1 +1,65 @@
-<p>product works!</p>
+<ng-container>
+    <div class="mt-2 px-[60px] py-4 flex justify-between">
+        <h1 class="text-[18px] font-[900]">Products</h1>
+        <button (click)="openDialog()" class="bg-[#005b96] px-2 py-1.5 text-white rounded-[3.2px]">New</button>
+    </div>
+    <div class="flex px-[60px] justify-center">
+        <table class="w-full border-[1px] border-[#ccc]">
+            <thead>
+                <th class="text-left p-1.5 border-[1px] border-[#ccc]">S.N</th>
+                <th class="text-left p-1.5 border-[1px] border-[#ccc]">Name</th>
+                <th class="text-left p-1.5 border-[1px] border-[#ccc]">Price</th>
+                <th class="text-left p-1.5 border-[1px] border-[#ccc]">Action</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let product of productList; let i=index">
+                    <td class="p-1.5 border-[1px] border-[#ccc]">{{i+1}}</td>
+                    <td class="p-1.5 border-[1px] border-[#ccc]">{{product?.name}}</td>
+                    <td class="p-1.5 border-[1px] border-[#ccc]">{{product?.price}}</td>
+                    <td class="p-1.5 border-[1px] border-[#ccc]">
+                        <mat-icon (click)="editProduct(product)">edit</mat-icon>
+                        <mat-icon (click)="deleteProduct(product?.id)">delete</mat-icon>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</ng-container>
+
+
+<ng-template #popup>
+    <div class="w-[40vw] ">
+        <div class="flex justify-between items-center p-2">
+            <h1 class="font-[900] text-[18px]">Add/Edit Product</h1>
+            <mat-icon (click)="closeDialog()" >close</mat-icon>
+
+        </div>
+
+        <form [formGroup]="productForm" class="px-[16px] py-[12px]">
+            <div>
+                <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Name</label>
+                <div class="mt-2">
+                    <input id="email" name="email" required formControlName="name"
+                        class="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6">
+                </div>
+            </div>
+
+            <div>
+                <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Price</label>
+                <div class="mt-2">
+                    <input id="email" name="email" required formControlName="price"
+                        class="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6">
+                </div>
+            </div>
+        </form>
+
+        <div class="flex justify-center items-center p-2 gap-[8px]">
+            <button (click)="closeDialog()" class="border-[#005b96] border-[1px] px-2 py-1.5 text-[#005b96] rounded-[3.2px]">Cancel</button>
+            <button *ngIf="mode=='add'" (click)="submitProduct()" class="bg-[#005b96] px-2 py-1.5 text-white rounded-[3.2px]">Save</button>
+            <button *ngIf="mode=='edit'" (click)="submitProduct(productId)" class="bg-[#005b96] px-2 py-1.5 text-white rounded-[3.2px]">Save</button>
+
+
+        </div>
+    </div>
+</ng-template>
