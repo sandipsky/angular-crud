@@ -31,7 +31,7 @@ export class ProductService {
     return this._http.delete(this.apiUrl+`/api/product/${id}`);
   }
 
-  filterProduct()
+  filterProduct(filterData:any)
   {
     return this._http.delete(this.apiUrl+`/api/Product/filter?sortBy=name&sortOrder=asc&filterByName=a&minPrice=1&maxPrice=110&page=1&pageSize=10`);
   }

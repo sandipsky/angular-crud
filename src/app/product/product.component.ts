@@ -19,11 +19,22 @@ export class ProductComponent {
   productList: any = [];
 
   productForm: FormGroup;
+  filterForm: FormGroup;
 
   @ViewChild('popup', { static: true }) popup!: TemplateRef<any>;
 
 
   constructor(public dialog: MatDialog, private _fb: FormBuilder, private productService: ProductService, private toastr: ToastrService) {
+    this.filterForm = this._fb.group({
+      sortBy: [],
+      sortOrder: [],
+      filterByName: [],
+      minPrice: [],
+      maxPrice: [],
+      page: [],
+      pageSize: []
+    })
+    
     this.productForm = this._fb.group({
       name: [],
       price: []
@@ -56,6 +67,11 @@ export class ProductComponent {
         });
       },
     })
+  }
+
+  filterProduct()
+  {
+    this.productService.filterProduct(this.filterForm.value);
   }
 
   submitProduct(id?: number) {
