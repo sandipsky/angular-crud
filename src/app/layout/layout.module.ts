@@ -8,6 +8,7 @@ import { SecretComponent } from '../secret/secret.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from '../home/home.component';
 import { LayoutComponent } from './layout.component';
+import { authGuard } from '../auth/auth.guard';
 
 const routes: Routes = [
   {
@@ -25,7 +26,14 @@ const routes: Routes = [
       {
         path: 'product',
         component: ProductComponent
+      },
+      {
+        path: 'secret',
+        component: SecretComponent,
+        canActivate: [authGuard],
+
       }
+
     ]
   }
 ]

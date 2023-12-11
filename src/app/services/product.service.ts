@@ -35,4 +35,9 @@ export class ProductService {
   {
     return this._http.delete(this.apiUrl+`/api/Product/filter?sortBy=name&sortOrder=asc&filterByName=a&minPrice=1&maxPrice=110&page=1&pageSize=10`);
   }
+
+  viewSecret()
+  {
+    return this._http.get(this.apiUrl + '/api/product/secret');
+  } 
 }
