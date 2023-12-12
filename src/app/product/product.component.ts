@@ -5,6 +5,8 @@ import {
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProductService } from '../services/product.service';
 import { ToastrService } from 'ngx-toastr';
+import { Sort } from '@angular/material/sort';
+import { PageEvent } from '@angular/material/paginator';
 
 
 @Component({
@@ -15,6 +17,7 @@ import { ToastrService } from 'ngx-toastr';
 export class ProductComponent {
   mode: string = 'add';
   productId: any = null;
+  length: number = 0;
 
   productList: any = [];
 
@@ -26,13 +29,13 @@ export class ProductComponent {
 
   constructor(public dialog: MatDialog, private _fb: FormBuilder, private productService: ProductService, private toastr: ToastrService) {
     this.filterForm = this._fb.group({
-      sortBy: [],
-      sortOrder: [],
-      filterByName: [],
-      minPrice: [],
-      maxPrice: [],
-      page: [],
-      pageSize: []
+      sortBy: ['name'],
+      sortOrder: ['asc'],
+      filterByName: [''],
+      minPrice: [0],
+      maxPrice: [100000],
+      page: [1],
+      pageSize: [6]
     })
     
     this.productForm = this._fb.group({
@@ -42,7 +45,8 @@ export class ProductComponent {
   }
 
   ngOnInit() {
-    this.getAllProducts();
+    // this.getAllProducts();
+    this.filterProduct();
   }
 
   openDialog() {
@@ -71,7 +75,36 @@ export class ProductComponent {
 
   filterProduct()
   {
-    this.productService.filterProduct(this.filterForm.value);
+    this.productService.filterProduct(this.filterForm.value).subscribe({
+      next: (data: any) => {
+        this.productList = data.items;
+        this.length = data.totalItems;
+      },
+      error: (err: any) => {
+        this.toastr.error(err.message, 'Error', {
+          closeButton: true,
+        });
+      },
+    });
+  }
+
+  sortData(sort: Sort) {
+    if (sort.active) {
+
+      this.filterForm?.get('sortBy')?.setValue(sort.active);
+    }
+    else {
+      this.filterForm?.get('sortBy')?.setValue('name');
+
+    }
+    this.filterForm?.get('sortOrder')?.setValue(sort.direction || "asc");
+    this.filterProduct();
+  }
+
+  onChangedPage(pageData: PageEvent) {
+    this.filterForm?.get('page')?.setValue(pageData.pageIndex+1);
+    this.filterForm?.get('pageSize')?.setValue(pageData.pageSize);
+    this.filterProduct();
   }
 
   submitProduct(id?: number) {

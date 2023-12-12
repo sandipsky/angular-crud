@@ -8,6 +8,8 @@ import { SecretComponent } from '../secret/secret.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from '../home/home.component';
 import { LayoutComponent } from './layout.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 import { authGuard } from '../auth/auth.guard';
 
 const routes: Routes = [
@@ -45,7 +47,9 @@ const routes: Routes = [
     MatIconModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    MatPaginatorModule,
+    MatSortModule
   ]
 })
 export class LayoutModule { }

@@ -33,7 +33,7 @@ export class ProductService {
 
   filterProduct(filterData:any)
   {
-    return this._http.delete(this.apiUrl+`/api/Product/filter?sortBy=name&sortOrder=asc&filterByName=a&minPrice=1&maxPrice=110&page=1&pageSize=10`);
+    return this._http.get(this.apiUrl+`/api/Product/filter?sortBy=${filterData.sortBy}&sortOrder=${filterData.sortOrder}&filterByName=${filterData.filterByName}&minPrice=${filterData.minPrice}&maxPrice=${filterData.maxPrice}&page=${filterData.page}&pageSize=${filterData.pageSize}`);
   }
 
   viewSecret()

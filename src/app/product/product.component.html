@@ -33,16 +33,16 @@
         <button (click)="openDialog()" class="bg-[#005b96] px-2 py-1.5 text-white rounded-[3.2px]">New</button>
     </div>
     <div class="flex px-[60px] justify-center">
-        <table class="w-full border-[1px] border-[#ccc]">
+        <table matSort (matSortChange)="sortData($event)" class="w-full border-[1px] border-[#ccc]">
             <thead>
                 <th class="text-left p-1.5 border-[1px] border-[#ccc]">S.N</th>
-                <th class="text-left p-1.5 border-[1px] border-[#ccc]">Name</th>
-                <th class="text-left p-1.5 border-[1px] border-[#ccc]">Price</th>
+                <th mat-sort-header="name" class="text-left p-1.5 border-[1px] border-[#ccc]">Name</th>
+                <th mat-sort-header="price" class="text-left p-1.5 border-[1px] border-[#ccc]">Price</th>
                 <th class="text-left p-1.5 border-[1px] border-[#ccc]">Action</th>
             </thead>
             <tbody>
                 <tr *ngFor="let product of productList; let i=index">
-                    <td class="p-1.5 border-[1px] border-[#ccc]">{{i+1}}</td>
+                    <td class="p-1.5 border-[1px] border-[#ccc]">{{i + (filterForm.value.page-1) * filterForm.value.pageSize + 1}}</td>
                     <td class="p-1.5 border-[1px] border-[#ccc]">{{product?.name}}</td>
                     <td class="p-1.5 border-[1px] border-[#ccc]">{{product?.price}}</td>
                     <td class="p-1.5 border-[1px] border-[#ccc]">
@@ -51,8 +51,12 @@
                     </td>
                 </tr>
             </tbody>
+
         </table>
     </div>
+    <mat-paginator *ngIf="productList.length > 0" [length]="length" [pageSize]="6" [pageSizeOptions]="[6, 12, 18]"
+        (page)="onChangedPage($event)" aria-label="Select page">
+    </mat-paginator>
 
 </ng-container>
 
