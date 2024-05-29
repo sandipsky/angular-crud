@@ -41,8 +41,10 @@
                 <th class="text-left p-1.5 border-[1px] border-[#ccc]">Action</th>
             </thead>
             <tbody>
+                @for (product of productList; track product.index) {
                 <tr *ngFor="let product of productList; let i=index">
-                    <td class="p-1.5 border-[1px] border-[#ccc]">{{i + (filterForm.value.page-1) * filterForm.value.pageSize + 1}}</td>
+                    <td class="p-1.5 border-[1px] border-[#ccc]">{{i + (filterForm.value.page-1) *
+                        filterForm.value.pageSize + 1}}</td>
                     <td class="p-1.5 border-[1px] border-[#ccc]">{{product?.name}}</td>
                     <td class="p-1.5 border-[1px] border-[#ccc]">{{product?.price}}</td>
                     <td class="p-1.5 border-[1px] border-[#ccc]">
@@ -50,6 +52,10 @@
                         <mat-icon (click)="deleteProduct(product?.id)">delete</mat-icon>
                     </td>
                 </tr>
+                } @empty {
+                No Products
+                }
+
             </tbody>
 
         </table>
@@ -65,7 +71,7 @@
     <div class="w-[40vw] ">
         <div class="flex justify-between items-center p-2">
             <h1 class="font-[900] text-[18px]">Add/Edit Product</h1>
-            <mat-icon (click)="closeDialog()" >close</mat-icon>
+            <mat-icon (click)="closeDialog()">close</mat-icon>
 
         </div>
 
@@ -88,9 +94,12 @@
         </form>
 
         <div class="flex justify-center items-center p-2 gap-[8px]">
-            <button (click)="closeDialog()" class="border-[#005b96] border-[1px] px-2 py-1.5 text-[#005b96] rounded-[3.2px]">Cancel</button>
-            <button *ngIf="mode=='add'" (click)="submitProduct()" class="bg-[#005b96] px-2 py-1.5 text-white rounded-[3.2px]">Save</button>
-            <button *ngIf="mode=='edit'" (click)="submitProduct(productId)" class="bg-[#005b96] px-2 py-1.5 text-white rounded-[3.2px]">Save</button>
+            <button (click)="closeDialog()"
+                class="border-[#005b96] border-[1px] px-2 py-1.5 text-[#005b96] rounded-[3.2px]">Cancel</button>
+            <button *ngIf="mode=='add'" (click)="submitProduct()"
+                class="bg-[#005b96] px-2 py-1.5 text-white rounded-[3.2px]">Save</button>
+            <button *ngIf="mode=='edit'" (click)="submitProduct(productId)"
+                class="bg-[#005b96] px-2 py-1.5 text-white rounded-[3.2px]">Save</button>
 
 
         </div>
